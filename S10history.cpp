@@ -41,7 +41,6 @@ using namespace std;
 
 char *progname;
 int debug = 0;    // no debug output by default
-bool json; // output json
 
 int usage(const char *errstr) {
 	cerr << errstr << endl;
