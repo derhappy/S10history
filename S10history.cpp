@@ -1,4 +1,7 @@
 //============================================================================
+// Author      : Markus Lascheit
+// Changes     : Added new parameter -json
+//============================================================================
 // Name        : S10history.cpp
 // Author      : Ralf Lehmann
 // Copyright   : Ralf Lehmann 02.2017
@@ -62,6 +65,7 @@ int usage(const char *errstr) {
 	cerr << "--month -+num  month; current month if not present" << endl;
 	cerr << "--day +-num    day; current day if not present" << endl;
 	cerr << "--service num  services port number (default: 5033)" << endl;
+	cerr << "--json         json output" << endl;
 
 	return 1;
 }
@@ -96,6 +100,7 @@ int main(int argc, char *argv[]) {
 	// report type
 	int report_type = 0; // 1=year; 2=month, 4=day; 0=current day
 	bool brief = false;	 // brief means only sum container to report
+	bool json = false;   // output json
 
 	// option struct
 	const struct option longopts[] = { { "version", no_argument, 0, 'v' }, { "year", required_argument, 0, 'y' }, { "month", required_argument, 0, 'm' }, { "day",
@@ -195,6 +200,9 @@ int main(int argc, char *argv[]) {
 		case 'i':
 			ip = optarg;
 			break;
+		case 'json':
+					json = true;
+					break;
 		case 'D':
 			debug = atoi(optarg);
 			stdLog.subscribeTo(GetGlobalChannel("info"));
