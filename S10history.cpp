@@ -92,7 +92,6 @@ int main(int argc, char *argv[]) {
 	char * user = 0;    // user name
 	char * password = 0; // password
 	char * aes = 0; 	// aes password
-	bool json = false; // output json
 	// S10 ip addr
 	char * ip = 0;		// ip
 	int service = 5033; // service port number of RSCP server S10
@@ -100,6 +99,7 @@ int main(int argc, char *argv[]) {
 	// report type
 	int report_type = 0; // 1=year; 2=month, 4=day; 0=current day
 	bool brief = false;	 // brief means only sum container to report
+	bool * json = false; // output json
 
 	// option struct
 	const struct option longopts[] = { { "version", no_argument, 0, 'v' }, { "year", required_argument, 0, 'y' }, { "month", required_argument, 0, 'm' }, { "day",
