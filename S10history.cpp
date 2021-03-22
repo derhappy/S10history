@@ -99,7 +99,7 @@ int main(int argc, char *argv[]) {
 	// report type
 	int report_type = 0; // 1=year; 2=month, 4=day; 0=current day
 	bool brief = false;	 // brief means only sum container to report
-	int json = false;
+	bool json = false;
 
 	// option struct
 	const struct option longopts[] = { { "version", no_argument, 0, 'v' }, { "year", required_argument, 0, 'y' }, { "month", required_argument, 0, 'm' },
@@ -222,6 +222,8 @@ int main(int argc, char *argv[]) {
 	rDebug("Password: %s", password);
 	rDebug("AES pw: %s", aes);
 	rDebug("json: %s", json);
+
+	json = true;
 
 	// check time
 	l->tm_sec = l->tm_min = l->tm_hour = 0;
