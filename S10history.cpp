@@ -41,7 +41,7 @@ using namespace std;
 
 char *progname;
 int debug = 0;    // no debug output by default
-bool json = false; // output json
+bool json; // output json
 
 int usage(const char *errstr) {
 	cerr << errstr << endl;
@@ -100,14 +100,14 @@ int main(int argc, char *argv[]) {
 	// report type
 	int report_type = 0; // 1=year; 2=month, 4=day; 0=current day
 	bool brief = false;	 // brief means only sum container to report
+	int json = false;
 
 	// option struct
-	const struct option longopts[] = { { "version", no_argument, 0, 'v' }, { "year", required_argument, 0, 'y' }, { "month", required_argument, 0, 'm' }, { "day",
-	required_argument, 0, 'd' }, { "user",
-	required_argument, 0, 'u' }, { "password", required_argument, 0, 'p' }, { "Password",
-	required_argument, 0, 'P' }, { "aes", required_argument, 0, 'a' }, { "AES", required_argument, 0, 'A' }, { "Debug", required_argument, 0, 'D' }, { "json", required_argument, 0, 'j' },
-			{ "help", no_argument, 0, 'h' }, { "utc", no_argument, 0, 'U' }, { "ip", required_argument, 0, 'i' }, { "service", required_argument, 0, 's' }, { "brief", no_argument,
-					0, 'b' }, };
+	const struct option longopts[] = { { "version", no_argument, 0, 'v' }, { "year", required_argument, 0, 'y' }, { "month", required_argument, 0, 'm' },
+			{ "day", required_argument, 0, 'd' }, { "user", required_argument, 0, 'u' }, { "password", required_argument, 0, 'p' },
+			{ "Password", required_argument, 0, 'P' }, { "aes", required_argument, 0, 'a' }, { "AES", required_argument, 0, 'A' },
+			{ "Debug", required_argument, 0, 'D' }, { "json", no_argument, 0, 'j' }, { "help", no_argument, 0, 'h' }, { "utc", no_argument, 0, 'U' },
+			{ "ip", required_argument, 0, 'i' }, { "service", required_argument, 0, 's' }, { "brief", no_argument,	0, 'b' }, };
 
 	// process arguments
 	int index;
@@ -201,7 +201,6 @@ int main(int argc, char *argv[]) {
 			break;
 		case 'j':
 			json = true;
-
 			break;
 		case 'D':
 			debug = atoi(optarg);
@@ -223,8 +222,7 @@ int main(int argc, char *argv[]) {
 	rDebug("User: %s", user);
 	rDebug("Password: %s", password);
 	rDebug("AES pw: %s", aes);
-	rDebug("Json: %s", json);
-	rDebug("brief: %s", brief);
+	rDebug("json: %s", json);
 
 	// check time
 	l->tm_sec = l->tm_min = l->tm_hour = 0;
