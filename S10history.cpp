@@ -105,7 +105,7 @@ int main(int argc, char *argv[]) {
 	const struct option longopts[] = { { "version", no_argument, 0, 'v' }, { "year", required_argument, 0, 'y' }, { "month", required_argument, 0, 'm' }, { "day",
 	required_argument, 0, 'd' }, { "user",
 	required_argument, 0, 'u' }, { "password", required_argument, 0, 'p' }, { "Password",
-	required_argument, 0, 'P' }, { "aes", required_argument, 0, 'a' }, { "AES", required_argument, 0, 'A' }, { "Debug", required_argument, 0, 'D' },
+	required_argument, 0, 'P' }, { "aes", required_argument, 0, 'a' }, { "AES", required_argument, 0, 'A' }, { "Debug", required_argument, 0, 'D' }, { "json", required_argument, 0, 'j' },
 			{ "help", no_argument, 0, 'h' }, { "utc", no_argument, 0, 'U' }, { "ip", required_argument, 0, 'i' }, { "service", required_argument, 0, 's' }, { "brief", no_argument,
 					0, 'b' }, };
 
@@ -201,6 +201,7 @@ int main(int argc, char *argv[]) {
 			break;
 		case 'j':
 			json = true;
+
 			break;
 		case 'D':
 			debug = atoi(optarg);
@@ -222,6 +223,7 @@ int main(int argc, char *argv[]) {
 	rDebug("User: %s", user);
 	rDebug("Password: %s", password);
 	rDebug("AES pw: %s", aes);
+	rDebug("Json: %s", json);
 
 	// check time
 	l->tm_sec = l->tm_min = l->tm_hour = 0;
