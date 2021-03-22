@@ -50,6 +50,7 @@ static uint8_t ucEncryptionIV[AES_BLOCK_SIZE];
 static uint8_t ucDecryptionIV[AES_BLOCK_SIZE];
 
 bool brief = false;	// brief report; sum only
+bool json  = false; // output json
 
 //
 // functions
@@ -789,9 +790,10 @@ int RscpReader() {
 
 //
 // wrapper, setting the time and interval
-int RscpReader_Day(const char * user, const char *pw, const char *aes, const char * ip, int port, struct tm *l, bool b) {
+int RscpReader_Day(const char * user, const char *pw, const char *aes, const char * ip, int port, struct tm *l, bool b, bool j) {
 	rDebug("RscpReader_Day");
 	brief = b;
+	json = j;
 	e3dc_user = user;
 	e3dc_password = pw;
 	aes_password = aes;
@@ -811,9 +813,10 @@ int RscpReader_Day(const char * user, const char *pw, const char *aes, const cha
 	return RscpReader();
 }
 
-int RscpReader_Month(const char * user, const char *pw, const char *aes, const char * ip, int port, struct tm *l, bool b) {
+int RscpReader_Month(const char * user, const char *pw, const char *aes, const char * ip, int port, struct tm *l, bool b, bool j) {
 	rDebug("RscpReader_Month");
 	brief = b;
+	json = j;
 	e3dc_user = user;
 	e3dc_password = pw;
 	aes_password = aes;
@@ -841,9 +844,10 @@ int RscpReader_Month(const char * user, const char *pw, const char *aes, const c
 	return RscpReader();
 }
 
-int RscpReader_Year(const char * user, const char *pw, const char *aes, const char * ip, int port, struct tm *l, bool b) {
+int RscpReader_Year(const char * user, const char *pw, const char *aes, const char * ip, int port, struct tm *l, bool b, bool j) {
 	rDebug("RscpReader_Year");
 	brief = b;
+	json = j;
 	e3dc_user = user;
 	e3dc_password = pw;
 	aes_password = aes;

@@ -41,7 +41,6 @@ using namespace std;
 
 char *progname;
 int debug = 0;    // no debug output by default
-bool json = false; // output json
 
 int usage(const char *errstr) {
 	cerr << errstr << endl;
@@ -93,7 +92,7 @@ int main(int argc, char *argv[]) {
 	char * user = 0;    // user name
 	char * password = 0; // password
 	char * aes = 0; 	// aes password
-
+	bool json = false; // output json
 	// S10 ip addr
 	char * ip = 0;		// ip
 	int service = 5033; // service port number of RSCP server S10
@@ -118,7 +117,7 @@ int main(int argc, char *argv[]) {
 	// turn off getopt error message
 	// opterr=1;
 	while (iarg != -1) {
-		iarg = getopt_long(argc, argv, "vhUy:m:d:u:p:P:d:D:A:a:i:s:b:json", longopts, &index);
+		iarg = getopt_long(argc, argv, "vhUy:m:d:u:p:P:d:D:A:a:i:s:b:j", longopts, &index);
 		switch (iarg) {
 		case 'h':
 			return usage("");
@@ -200,9 +199,9 @@ int main(int argc, char *argv[]) {
 		case 'i':
 			ip = optarg;
 			break;
-		case 'json':
-					json = true;
-					break;
+		case 'j':
+			json = true;
+			break;
 		case 'D':
 			debug = atoi(optarg);
 			stdLog.subscribeTo(GetGlobalChannel("info"));
@@ -233,10 +232,10 @@ int main(int argc, char *argv[]) {
 		return usage("ERROR: report date is in the future");
 	}
 
-	extern int RscpReader_Day(const char * user, const char *pw, const char *aes, const char * ip, int port, struct tm *l, bool brief);
-	extern int RscpReader_Month(const char * user, const char *pw, const char *aes, const char * ip, int port, struct tm *l, bool brief);
-	extern int RscpReader_Year(const char * user, const char *pw, const char *aes, const char * ip, int port, struct tm *l, bool brief);
-	int (*report_func)(const char *, const char *, const char *, const char *, int port, struct tm *, bool brief) = RscpReader_Day;
+	extern int RscpReader_Day(const char * user, const char *pw, const char *aes, const char * ip, int port, struct tm *l, bool brief, bool json);
+	extern int RscpReader_Month(const char * user, const char *pw, const char *aes, const char * ip, int port, struct tm *l, bool brief, bool json);
+	extern int RscpReader_Year(const char * user, const char *pw, const char *aes, const char * ip, int port, struct tm *l, bool brief, bool json);
+	int (*report_func)(const char *, const char *, const char *, const char *, int port, struct tm *, bool brief, bool json) = RscpReader_Day;
 
 	// check report span
 	if (report_type == 0) {
@@ -265,6 +264,6 @@ int main(int argc, char *argv[]) {
 	}
 	rInfo("Report starts: %s", asctime(l));
 	rInfo("S10 addr: %s, Port: %d", ip, service);
-	return (*report_func)(user, password, aes, ip, service, l, brief);
+	return (*report_func)(user, password, aes, ip, service, l, brief, json);
 	return 0;
 }
