@@ -180,19 +180,19 @@ int db_value_container(RscpProtocol *protocol, std::vector<SRscpValue> *dbVal) {
 	if (json == false ) { printf("[%d]-%s-CSV: %d;%.2f;%.2f;%.2f;%.2f;%.2f;%.2f;%.2f\n", graph_index, value_prefix, (int) d, val.bat_in, val.bat_out, val.bat_charge_level, val.production, val.grid_in,
 			val.grid_out, val.consumption); }
 	else {
-		printf('{"result": {');
-		printf('"DATE": ', ctime(&d));
-		printf('"DB_BAT_POWER_IN": ' val.bat_in);
-		printf('"DB_BAT_POWER_OUT": ' val.bat_out);
-		printf('"DB_DC_POWER": ' val.production);
-		printf('"DB_GRID_POWER_IN": ' val.grid_in);
-		printf('"DB_GRID_POWER_OUT": ' val.grid_out);
-		printf('"DB_CONSUMPTION": ' val.consumption);
-		printf('"DB_BAT_CHARGE_LEVEL": ' val.bat_charge_level);
-		printf('"DB_BAT_CYCLE_COUNT": ' val.bat_cycle_count);
-		printf('"DB_CONSUMED_PRODUCTION": ' val.consumed_prod);
-		printf('"DB_AUTARKY": ' val.autarky);
-		printf('}});'
+		printf("{\"result\": {");
+		printf("\"DATE\": ", ctime(&d));
+		printf("\"DB_BAT_POWER_IN\": " val.bat_in);
+		printf("\"DB_BAT_POWER_OUT\": " val.bat_out);
+		printf("\"DB_DC_POWER\": " val.production);
+		printf("\"DB_GRID_POWER_IN\": " val.grid_in);
+		printf("\"DB_GRID_POWER_OUT\": " val.grid_out);
+		printf("\"DB_CONSUMPTION\": " val.consumption);
+		printf("\"DB_BAT_CHARGE_LEVEL\": " val.bat_charge_level);
+		printf("\"DB_BAT_CYCLE_COUNT\": " val.bat_cycle_count);
+		printf("\"DB_CONSUMED_PRODUCTION\": " val.consumed_prod);
+		printf("\"DB_AUTARKY\": " val.autarky);
+		printf("}}");
 	}
 	return 0;
 }
@@ -313,20 +313,20 @@ int db_sum_container(RscpProtocol *protocol, std::vector<SRscpValue> *dbSum) {
 			sum.consumption);
 
 	else {
-			printf('{"result": {');
-			printf('"DATE": ', ctime(&d));
-			printf('"DB_BAT_POWER_IN": ' sum.bat_in);
-			printf('"DB_BAT_POWER_OUT": ' sum.bat_out);
-			printf('"DB_DC_POWER": ' sum.production);
-			printf('"DB_GRID_POWER_IN": ' sum.grid_in);
-			printf('"DB_GRID_POWER_OUT": ' sum.grid_out);
-			printf('"DB_CONSUMPTION": ' sum.consumption);
-			printf('"DB_BAT_CHARGE_LEVEL": ' sum.bat_charge_level);
-			printf('"DB_BAT_CYCLE_COUNT": ' sum.bat_cycle_count);
-			printf('"DB_CONSUMED_PRODUCTION": ' sum.consumed_prod);
-			printf('"DB_AUTARKY": ' sum.autarky);
-			printf('}});'
-		}
+		printf("{\"result\": {");
+		printf("\"DATE\": ", ctime(&d));
+		printf("\"DB_BAT_POWER_IN\": " sum.bat_in);
+		printf("\"DB_BAT_POWER_OUT\": " sum.bat_out);
+		printf("\"DB_DC_POWER\": " sum.production);
+		printf("\"DB_GRID_POWER_IN\": " sum.grid_in);
+		printf("\"DB_GRID_POWER_OUT\": " sum.grid_out);
+		printf("\"DB_CONSUMPTION\": " sum.consumption);
+		printf("\"DB_BAT_CHARGE_LEVEL\": " sum.bat_charge_level);
+		printf("\"DB_BAT_CYCLE_COUNT\": " sum.bat_cycle_count);
+		printf("\"DB_CONSUMED_PRODUCTION\": " sum.consumed_prod);
+		printf("\"DB_AUTARKY\": " sum.autarky);
+		printf("}}");
+    }
 
 	return 0;
 }

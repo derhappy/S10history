@@ -41,6 +41,7 @@ using namespace std;
 
 char *progname;
 int debug = 0;    // no debug output by default
+bool json = false; // output json
 
 int usage(const char *errstr) {
 	cerr << errstr << endl;
@@ -100,7 +101,6 @@ int main(int argc, char *argv[]) {
 	// report type
 	int report_type = 0; // 1=year; 2=month, 4=day; 0=current day
 	bool brief = false;	 // brief means only sum container to report
-	bool json = false;   // output json
 
 	// option struct
 	const struct option longopts[] = { { "version", no_argument, 0, 'v' }, { "year", required_argument, 0, 'y' }, { "month", required_argument, 0, 'm' }, { "day",
@@ -118,7 +118,7 @@ int main(int argc, char *argv[]) {
 	// turn off getopt error message
 	// opterr=1;
 	while (iarg != -1) {
-		iarg = getopt_long(argc, argv, "vhUy:m:d:u:p:P:d:D:A:a:i:s:b", longopts, &index);
+		iarg = getopt_long(argc, argv, "vhUy:m:d:u:p:P:d:D:A:a:i:s:b:json", longopts, &index);
 		switch (iarg) {
 		case 'h':
 			return usage("");
