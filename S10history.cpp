@@ -221,9 +221,6 @@ int main(int argc, char *argv[]) {
 	rDebug("User: %s", user);
 	rDebug("Password: %s", password);
 	rDebug("AES pw: %s", aes);
-	rDebug("json: %s", json);
-
-	json = true;
 
 	// check time
 	l->tm_sec = l->tm_min = l->tm_hour = 0;
@@ -234,10 +231,10 @@ int main(int argc, char *argv[]) {
 		return usage("ERROR: report date is in the future");
 	}
 
-	extern int RscpReader_Day(const char * user, const char *pw, const char *aes, const char * ip, int port, struct tm *l, bool brief, int json);
-	extern int RscpReader_Month(const char * user, const char *pw, const char *aes, const char * ip, int port, struct tm *l, bool brief, int json);
-	extern int RscpReader_Year(const char * user, const char *pw, const char *aes, const char * ip, int port, struct tm *l, bool brief, int json);
-	int (*report_func)(const char *, const char *, const char *, const char *, int port, struct tm *, bool brief, int json) = RscpReader_Day;
+	extern int RscpReader_Day(const char * user, const char *pw, const char *aes, const char * ip, int port, struct tm *l, bool brief);
+	extern int RscpReader_Month(const char * user, const char *pw, const char *aes, const char * ip, int port, struct tm *l, bool brief);
+	extern int RscpReader_Year(const char * user, const char *pw, const char *aes, const char * ip, int port, struct tm *l, bool brief);
+	int (*report_func)(const char *, const char *, const char *, const char *, int port, struct tm *, bool brief) = RscpReader_Day;
 
 	// check report span
 	if (report_type == 0) {
@@ -266,6 +263,6 @@ int main(int argc, char *argv[]) {
 	}
 	rInfo("Report starts: %s", asctime(l));
 	rInfo("S10 addr: %s, Port: %d", ip, service);
-	return (*report_func)(user, password, aes, ip, service, l, brief, json);
+	return (*report_func)(user, password, aes, ip, service, l, brief);
 	return 0;
 }
