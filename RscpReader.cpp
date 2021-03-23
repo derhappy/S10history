@@ -50,7 +50,7 @@ static uint8_t ucEncryptionIV[AES_BLOCK_SIZE];
 static uint8_t ucDecryptionIV[AES_BLOCK_SIZE];
 
 bool brief = false;	// brief report; sum only
-bool json  = false; // output json
+static int json  = 0; // output json
 
 //
 // functions
@@ -91,83 +91,83 @@ int db_value_container(RscpProtocol *protocol, std::vector<SRscpValue> *dbVal) {
 	}
 	graph_index++;
 	time_t d = start.seconds + ((graph_index - 1) * interval.seconds);
-	if (json == false ) { printf("[%d]-%s Date: %d - %s", graph_index, value_prefix, (int) d, ctime(&d)); }
+	if (json == 0 ) { printf("[%d]-%s Date: %d - %s", graph_index, value_prefix, (int) d, ctime(&d)); }
 
 
 	for (size_t i = 0; i < dbVal->size(); ++i) {
 		switch ((*dbVal)[i].tag) {
 		case TAG_DB_GRAPH_INDEX: {
 			float fgraph_index = protocol->getValueAsFloat32(&((*dbVal)[i]));
-			if (json == false ) { printf("[%d]-%s graph index: %0.1f \n", graph_index, value_prefix, fgraph_index); }
+			if (json == 0 ) { printf("[%d]-%s graph index: %0.1f \n", graph_index, value_prefix, fgraph_index); }
 			break;
 		}
 		case TAG_DB_BAT_POWER_IN: {
 			float bat_power_in = protocol->getValueAsFloat32(&((*dbVal)[i]));
-			if (json == false ) { printf("[%d]-%s battery in: %0.1f %s\n", graph_index, value_prefix, bat_power_in, W); }
+			if (json == 0 ) { printf("[%d]-%s battery in: %0.1f %s\n", graph_index, value_prefix, bat_power_in, W); }
 			val.bat_in = bat_power_in;
 			break;
 		}
 		case TAG_DB_BAT_POWER_OUT: {
 			float bat_power_out = protocol->getValueAsFloat32(&((*dbVal)[i]));
-			if (json == false ) { printf("[%d]-%s battery out: %0.1f %s\n", graph_index, value_prefix, bat_power_out, W); }
+			if (json == 0 ) { printf("[%d]-%s battery out: %0.1f %s\n", graph_index, value_prefix, bat_power_out, W); }
 			val.bat_out = bat_power_out;
 			break;
 		}
 		case TAG_DB_DC_POWER: {
 			float dc_power = protocol->getValueAsFloat32(&((*dbVal)[i]));
-			if (json == false ) { printf("[%d]-%s production: %0.1f %s\n", graph_index, value_prefix, dc_power, W); }
+			if (json == 0 ) { printf("[%d]-%s production: %0.1f %s\n", graph_index, value_prefix, dc_power, W); }
 			val.production = dc_power;
 			break;
 		}
 		case TAG_DB_GRID_POWER_IN: {
 			float grid_power_in = protocol->getValueAsFloat32(&((*dbVal)[i]));
-			if (json == false ) { printf("[%d]-%s grid in: %0.1f %s\n", graph_index, value_prefix, grid_power_in, W); }
+			if (json == 0 ) { printf("[%d]-%s grid in: %0.1f %s\n", graph_index, value_prefix, grid_power_in, W); }
 			val.grid_in = grid_power_in;
 			break;
 		}
 		case TAG_DB_GRID_POWER_OUT: {
 			float grid_power_out = protocol->getValueAsFloat32(&((*dbVal)[i]));
-			if (json == false ) { printf("[%d]-%s grid out: %0.1f %s\n", graph_index, value_prefix, grid_power_out, W); }
+			if (json == 0 ) { printf("[%d]-%s grid out: %0.1f %s\n", graph_index, value_prefix, grid_power_out, W); }
 			val.grid_out = grid_power_out;
 			break;
 		}
 		case TAG_DB_CONSUMPTION: {
 			float db_consumption = protocol->getValueAsFloat32(&((*dbVal)[i]));
-			if (json == false ) { printf("[%d]-%s consumption: %0.1f %s\n", graph_index, value_prefix, db_consumption, W); }
+			if (json == 0 ) { printf("[%d]-%s consumption: %0.1f %s\n", graph_index, value_prefix, db_consumption, W); }
 			val.consumption = db_consumption;
 			break;
 		}
 		case TAG_DB_PM_0_POWER: {
 			float pm0_power = protocol->getValueAsFloat32(&((*dbVal)[i]));
-			if (json == false ) { printf("[%d]-%s pm 0 power: %0.1f %s\n", graph_index, value_prefix, pm0_power, W); }
+			if (json == 0 ) { printf("[%d]-%s pm 0 power: %0.1f %s\n", graph_index, value_prefix, pm0_power, W); }
 			break;
 		}
 		case TAG_DB_PM_1_POWER: {
 			float pm1_power = protocol->getValueAsFloat32(&((*dbVal)[i]));
-			if (json == false ) { printf("[%d]-%s pm 1 power: %0.1f %s\n", graph_index, value_prefix, pm1_power, W); }
+			if (json == 0 ) { printf("[%d]-%s pm 1 power: %0.1f %s\n", graph_index, value_prefix, pm1_power, W); }
 			break;
 		}
 		case TAG_DB_BAT_CHARGE_LEVEL: {
 			float bat_level = protocol->getValueAsFloat32(&((*dbVal)[i]));
-			if (json == false ) { printf("[%d]-%s bat charge level: %0.1f %%\n", graph_index, value_prefix, bat_level); }
+			if (json == 0 ) { printf("[%d]-%s bat charge level: %0.1f %%\n", graph_index, value_prefix, bat_level); }
 			val.bat_charge_level = bat_level;
 			break;
 		}
 		case TAG_DB_BAT_CYCLE_COUNT: {
 			float cycle = protocol->getValueAsFloat32(&((*dbVal)[i]));
-			if (json == false ) { printf("[%d]-%s bat cycle count: %f \n", graph_index, value_prefix, cycle); }
+			if (json == 0 ) { printf("[%d]-%s bat cycle count: %f \n", graph_index, value_prefix, cycle); }
 			val.bat_cycle_count = cycle;
 			break;
 		}
 		case TAG_DB_CONSUMED_PRODUCTION: {
 			float prod = protocol->getValueAsFloat32(&((*dbVal)[i]));
-			if (json == false ) { printf("[%d]-%s consumed production: %0.1f \n", graph_index, value_prefix, prod); }
+			if (json == 0 ) { printf("[%d]-%s consumed production: %0.1f \n", graph_index, value_prefix, prod); }
 			val.consumed_prod = prod;
 			break;
 		}
 		case TAG_DB_AUTARKY: {
 			float aut = protocol->getValueAsFloat32(&((*dbVal)[i]));
-			if (json == false ) { printf("[%d]-%s autarky: %f \n", graph_index, value_prefix, aut); }
+			if (json == 0 ) { printf("[%d]-%s autarky: %f \n", graph_index, value_prefix, aut); }
 			val.autarky = aut;
 			break;
 		}
@@ -176,9 +176,9 @@ int db_value_container(RscpProtocol *protocol, std::vector<SRscpValue> *dbVal) {
 		}
 	}
 	if (graph_index == 1) {
-		if (json == false ) { printf("[%d]-%s-CSV-head: date;batin;batout;batsoc;pro;netin;netout;con\n", graph_index, value_prefix); }
+		if (json == 0 ) { printf("[%d]-%s-CSV-head: date;batin;batout;batsoc;pro;netin;netout;con\n", graph_index, value_prefix); }
 	}
-	if (json == false ) { printf("[%d]-%s-CSV: %d;%.2f;%.2f;%.2f;%.2f;%.2f;%.2f;%.2f\n", graph_index, value_prefix, (int) d, val.bat_in, val.bat_out, val.bat_charge_level, val.production, val.grid_in,
+	if (json == 0 ) { printf("[%d]-%s-CSV: %d;%.2f;%.2f;%.2f;%.2f;%.2f;%.2f;%.2f\n", graph_index, value_prefix, (int) d, val.bat_in, val.bat_out, val.bat_charge_level, val.production, val.grid_in,
 			val.grid_out, val.consumption);
 	} else {
 		printf("%s {\"result\": {");
@@ -215,9 +215,9 @@ int db_sum_container(RscpProtocol *protocol, std::vector<SRscpValue> *dbSum) {
 	graph_index = 0;
 	time_t d = start.seconds;
 	const char * sum_prefix = db_sum_prefix();
-	if (json == false ) { printf("%s start: %d - %s", sum_prefix, (int) d, ctime(&d));  }
+	if (json == 0 ) { printf("%s start: %d - %s", sum_prefix, (int) d, ctime(&d));  }
 	d = start.seconds + span.seconds;
-	if (json == false ) { printf("%s end: %d - %s", sum_prefix, (int) d, ctime(&d));  }
+	if (json == 0 ) { printf("%s end: %d - %s", sum_prefix, (int) d, ctime(&d));  }
 	struct sum_t {
 		float bat_in, bat_out;
 		float production; 	// production
@@ -230,76 +230,76 @@ int db_sum_container(RscpProtocol *protocol, std::vector<SRscpValue> *dbSum) {
 		switch ((*dbSum)[i].tag) {
 		case TAG_DB_GRAPH_INDEX: {
 			float graph_index = protocol->getValueAsFloat32(&((*dbSum)[i]));
-			if (json == false ) { printf("%s graph index: %0.1f \n", sum_prefix, graph_index); }
+			if (json == 0 ) { printf("%s graph index: %0.1f \n", sum_prefix, graph_index); }
 			break;
 		}
 		case TAG_DB_BAT_POWER_IN: {
 			float bat_power_in = protocol->getValueAsFloat32(&((*dbSum)[i]));
-			if (json == false ) { printf("%s battery in: %0.1f Wh\n", sum_prefix, bat_power_in); }
+			if (json == 0 ) { printf("%s battery in: %0.1f Wh\n", sum_prefix, bat_power_in); }
 			sum.bat_in = bat_power_in;
 			break;
 		}
 		case TAG_DB_BAT_POWER_OUT: {
 			float bat_power_out = protocol->getValueAsFloat32(&((*dbSum)[i]));
-			if (json == false ) { printf("%s battery out: %0.1f Wh\n", sum_prefix, bat_power_out); }
+			if (json == 0 ) { printf("%s battery out: %0.1f Wh\n", sum_prefix, bat_power_out); }
 			sum.bat_out = bat_power_out;
 			break;
 		}
 		case TAG_DB_DC_POWER: {
 			float dc_power = protocol->getValueAsFloat32(&((*dbSum)[i]));
-			if (json == false ) { printf("%s production: %0.1f Wh\n", sum_prefix, dc_power); }
+			if (json == 0 ) { printf("%s production: %0.1f Wh\n", sum_prefix, dc_power); }
 			sum.production = dc_power;
 			break;
 		}
 		case TAG_DB_GRID_POWER_IN: {
 			float grid_power_in = protocol->getValueAsFloat32(&((*dbSum)[i]));
-			if (json == false ) { printf("%s grid in: %0.1f Wh\n", sum_prefix, grid_power_in); }
+			if (json == 0 ) { printf("%s grid in: %0.1f Wh\n", sum_prefix, grid_power_in); }
 			sum.grid_in = grid_power_in;
 			break;
 		}
 		case TAG_DB_GRID_POWER_OUT: {
 			float grid_power_out = protocol->getValueAsFloat32(&((*dbSum)[i]));
-			if (json == false ) { printf("%s grid out: %0.1f Wh\n", sum_prefix, grid_power_out); }
+			if (json == 0 ) { printf("%s grid out: %0.1f Wh\n", sum_prefix, grid_power_out); }
 			sum.grid_out = grid_power_out;
 			break;
 		}
 		case TAG_DB_CONSUMPTION: {
 			float db_consumption = protocol->getValueAsFloat32(&((*dbSum)[i]));
-			if (json == false ) { printf("%s consumption: %0.1f Wh\n", sum_prefix, db_consumption); }
+			if (json == 0 ) { printf("%s consumption: %0.1f Wh\n", sum_prefix, db_consumption); }
 			sum.consumption = db_consumption;
 			break;
 		}
 		case TAG_DB_PM_0_POWER: {
 			float pm0_power = protocol->getValueAsFloat32(&((*dbSum)[i]));
-			if (json == false ) { printf("%s pm 0 power: %0.1f Wh\n", sum_prefix, pm0_power); }
+			if (json == 0 ) { printf("%s pm 0 power: %0.1f Wh\n", sum_prefix, pm0_power); }
 			break;
 		}
 		case TAG_DB_PM_1_POWER: {
 			float pm1_power = protocol->getValueAsFloat32(&((*dbSum)[i]));
-			if (json == false ) { printf("%s pm 1 power: %0.1f Wh\n", sum_prefix, pm1_power); }
+			if (json == 0 ) { printf("%s pm 1 power: %0.1f Wh\n", sum_prefix, pm1_power); }
 			break;
 		}
 		case TAG_DB_BAT_CHARGE_LEVEL: {
 			float bat_level = protocol->getValueAsFloat32(&((*dbSum)[i]));
-			if (json == false ) { printf("%s bat charge level: %0.1f %%\n", sum_prefix, bat_level); }
+			if (json == 0 ) { printf("%s bat charge level: %0.1f %%\n", sum_prefix, bat_level); }
 			sum.bat_charge_level = bat_level;
 			break;
 		}
 		case TAG_DB_BAT_CYCLE_COUNT: {
 			float cycle = protocol->getValueAsFloat32(&((*dbSum)[i]));
-			if (json == false ) { printf("%s bat cycle count: %f \n", sum_prefix, cycle); }
+			if (json == 0 ) { printf("%s bat cycle count: %f \n", sum_prefix, cycle); }
 			sum.bat_cycle_count = cycle;
 			break;
 		}
 		case TAG_DB_CONSUMED_PRODUCTION: {
 			float prod = protocol->getValueAsFloat32(&((*dbSum)[i]));
-			if (json == false ) { printf("%s consumed production: %0.1f \n", sum_prefix, prod); }
+			if (json == 0 ) { printf("%s consumed production: %0.1f \n", sum_prefix, prod); }
 			sum.consumed_prod = prod;
 			break;
 		}
 		case TAG_DB_AUTARKY: {
 			float aut = protocol->getValueAsFloat32(&((*dbSum)[i]));
-			if (json == false ) {printf("%s autarky: %f \n", sum_prefix, aut); }
+			if (json == 0 ) {printf("%s autarky: %f \n", sum_prefix, aut); }
 			sum.autarky = aut;
 			break;
 		}
@@ -308,7 +308,7 @@ int db_sum_container(RscpProtocol *protocol, std::vector<SRscpValue> *dbSum) {
 		}
 	}
 
-	if (json == false ) {
+	if (json == 0 ) {
 		printf("%s-CSV-head: date;batin;batout;batsoc;pro;netin;netout;con\n", sum_prefix);
 		printf("%s-CSV: %d;%.2f;%.2f;%.2f;%.2f;%.2f;%.2f;%.2f\n", sum_prefix, (int) start.seconds, sum.bat_in, sum.bat_out, sum.bat_charge_level, sum.production, sum.grid_in, sum.grid_out,
 			sum.consumption);
@@ -790,7 +790,7 @@ int RscpReader() {
 
 //
 // wrapper, setting the time and interval
-int RscpReader_Day(const char * user, const char *pw, const char *aes, const char * ip, int port, struct tm *l, bool b, bool j) {
+int RscpReader_Day(const char * user, const char *pw, const char *aes, const char * ip, int port, struct tm *l, bool b, int j) {
 	rDebug("RscpReader_Day");
 	brief = b;
 	json = j;
@@ -813,7 +813,7 @@ int RscpReader_Day(const char * user, const char *pw, const char *aes, const cha
 	return RscpReader();
 }
 
-int RscpReader_Month(const char * user, const char *pw, const char *aes, const char * ip, int port, struct tm *l, bool b, bool j) {
+int RscpReader_Month(const char * user, const char *pw, const char *aes, const char * ip, int port, struct tm *l, bool b, int j) {
 	rDebug("RscpReader_Month");
 	brief = b;
 	json = j;
@@ -844,7 +844,7 @@ int RscpReader_Month(const char * user, const char *pw, const char *aes, const c
 	return RscpReader();
 }
 
-int RscpReader_Year(const char * user, const char *pw, const char *aes, const char * ip, int port, struct tm *l, bool b, bool j) {
+int RscpReader_Year(const char * user, const char *pw, const char *aes, const char * ip, int port, struct tm *l, bool b, int j) {
 	rDebug("RscpReader_Year");
 	brief = b;
 	json = j;

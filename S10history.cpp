@@ -99,7 +99,7 @@ int main(int argc, char *argv[]) {
 	// report type
 	int report_type = 0; // 1=year; 2=month, 4=day; 0=current day
 	bool brief = false;	 // brief means only sum container to report
-	bool json = false;
+	int json = 0;
 
 	// option struct
 	const struct option longopts[] = { { "version", no_argument, 0, 'v' }, { "year", required_argument, 0, 'y' }, { "month", required_argument, 0, 'm' },
@@ -199,7 +199,7 @@ int main(int argc, char *argv[]) {
 			ip = optarg;
 			break;
 		case 'j':
-			json = true;
+			json = 1;
 			break;
 		case 'D':
 			debug = atoi(optarg);
@@ -234,10 +234,10 @@ int main(int argc, char *argv[]) {
 		return usage("ERROR: report date is in the future");
 	}
 
-	extern int RscpReader_Day(const char * user, const char *pw, const char *aes, const char * ip, int port, struct tm *l, bool brief, bool json);
-	extern int RscpReader_Month(const char * user, const char *pw, const char *aes, const char * ip, int port, struct tm *l, bool brief, bool json);
-	extern int RscpReader_Year(const char * user, const char *pw, const char *aes, const char * ip, int port, struct tm *l, bool brief, bool json);
-	int (*report_func)(const char *, const char *, const char *, const char *, int port, struct tm *, bool brief, bool json) = RscpReader_Day;
+	extern int RscpReader_Day(const char * user, const char *pw, const char *aes, const char * ip, int port, struct tm *l, bool brief, int json);
+	extern int RscpReader_Month(const char * user, const char *pw, const char *aes, const char * ip, int port, struct tm *l, bool brief, int json);
+	extern int RscpReader_Year(const char * user, const char *pw, const char *aes, const char * ip, int port, struct tm *l, bool brief, int json);
+	int (*report_func)(const char *, const char *, const char *, const char *, int port, struct tm *, bool brief, int json) = RscpReader_Day;
 
 	// check report span
 	if (report_type == 0) {
