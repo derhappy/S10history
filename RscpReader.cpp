@@ -318,7 +318,7 @@ int db_sum_container(RscpProtocol *protocol, std::vector<SRscpValue> *dbSum) {
 		printf(",\"DB_BAT_POWER_IN\": %.2f", sum.bat_in);
 		printf(",\"DB_BAT_POWER_OUT\": %.2f", sum.bat_out);
 		printf(",\"DB_DC_POWER\": %.2f", sum.production);
-		printf(",\"DB_GRID_POWER_IN\": %.2f", sum.grid_in);
+		printf(",\"DB_GRID_POWER_IN\": %.2f", sum.grid_in)
 		printf(",\"DB_GRID_POWER_OUT\": %.2f", sum.grid_out);
 		printf(",\"DB_CONSUMPTION\": %.2f", sum.consumption);
 		printf(",\"DB_BAT_CHARGE_LEVEL\": %.2f", sum.bat_charge_level);
