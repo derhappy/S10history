@@ -313,19 +313,19 @@ int db_sum_container(RscpProtocol *protocol, std::vector<SRscpValue> *dbSum) {
 		printf("%s-CSV: %d;%.2f;%.2f;%.2f;%.2f;%.2f;%.2f;%.2f\n", sum_prefix, (int) start.seconds, sum.bat_in, sum.bat_out, sum.bat_charge_level, sum.production, sum.grid_in, sum.grid_out,
 			sum.consumption);
 	} else {
-		printf("%s {\"result\": {");
-		printf("%s \"DATE\": %d - %s", sum_prefix, (int) d, ctime(&d)), ",";
-		printf("%s \"DB_BAT_POWER_IN\": %f;", sum_prefix, sum.bat_in, ",");
-		printf("%s \"DB_BAT_POWER_OUT\": %f;", sum.bat_out, ",");
-		printf("%s \"DB_DC_POWER\": %f;", sum.production, ",");
-		printf("%s \"DB_GRID_POWER_IN\": %f;", sum.grid_in, ",");
-		printf("%s \"DB_GRID_POWER_OUT\": %f;", sum.grid_out, ",");
-		printf("%s \"DB_CONSUMPTION\": %f;", sum.consumption, ",");
-		printf("%s \"DB_BAT_CHARGE_LEVEL\": %f;", sum.bat_charge_level, ",");
-		printf("%s \"DB_BAT_CYCLE_COUNT\": %0.1f;", sum.bat_cycle_count, ",");
-		printf("%s \"DB_CONSUMED_PRODUCTION\": %0.1f;", sum.consumed_prod, ",");
-		printf("%s \"DB_AUTARKY\": %f;", sum.autarky);
-		printf("%s }}");
+		printf("{\"result\": {");
+		printf("\"DATE\": %d - %s", (int) d, ctime(&d));
+		printf(",\"DB_BAT_POWER_IN\": %.2f", sum.bat_in);
+		printf(",\"DB_BAT_POWER_OUT\": %.2f", sum.bat_out);
+		printf(",\"DB_DC_POWER\": %.2f", sum.production);
+		printf(",\"DB_GRID_POWER_IN\": %.2f", sum.grid_in);
+		printf(",\"DB_GRID_POWER_OUT\": %.2f", sum.grid_out);
+		printf(",\"DB_CONSUMPTION\": %.2f", sum.consumption);
+		printf(",\"DB_BAT_CHARGE_LEVEL\": %.2f", sum.bat_charge_level);
+		printf(",\"DB_BAT_CYCLE_COUNT\": %0.1f", sum.bat_cycle_count);
+		printf(",\"DB_CONSUMED_PRODUCTION\": %0.2f", sum.consumed_prod);
+		printf(",\"DB_AUTARKY\": %.2f", sum.autarky);
+		printf("}}");
     }
 
 	return 0;
